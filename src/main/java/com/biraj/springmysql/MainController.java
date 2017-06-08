@@ -1,5 +1,9 @@
 package com.biraj.springmysql;
 
+import java.util.List;
+import java.util.Map;
+
+import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -28,9 +32,11 @@ public class MainController {
   }
   
   @GetMapping(path="/all")
-  public @ResponseBody Iterable<User> getAllUsers() {
-    // This returns a JSON or XML with the users
-    return userRepository.findAll();
+  public  String getAllUsers(Map<String, Object> model) {
+    Iterable<User> user = userRepository.findAll();
+    List<User> userlist =  Lists.newArrayList(user);
+    model.put("liste", userlist);
+    return "listofuser";
   }
 
   
