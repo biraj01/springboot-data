@@ -47,6 +47,8 @@ public class MainController {
     return "adduser";
   }
   
+ 
+  
   @PostMapping(path="/adduser") // Map ONLY Post Requests
   public String saveNewUser (@ModelAttribute User user) {
     userRepository.save(user);  
