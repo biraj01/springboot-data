@@ -8,6 +8,7 @@ ALl used framework/tools
 * Spring data jpa with Hibernate
 * Mysql database
 * Thymeleaf as template engine to render data from Server in frontend
+* logging to file with slf4j logger
 
 ## Todos
 * Add Bootstrap 
