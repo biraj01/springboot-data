@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.assertj.core.util.Lists;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping(path="/demo")
 public class MainController {
   
+  private static final Logger log = LoggerFactory.getLogger(MainController.class);
+
   @Autowired
   private UserRepository userRepository;
 
@@ -39,12 +43,14 @@ public class MainController {
     // @ResponseBody means the returned String is the response, not a view name
     // @RequestParam means it is a parameter from the GET or POST request
     model.addAttribute("user",new User());
+    log.info("add new user page");
     return "adduser";
   }
   
   @PostMapping(path="/adduser") // Map ONLY Post Requests
   public String saveNewUser (@ModelAttribute User user) {
-    userRepository.save(user);    
+    userRepository.save(user);  
+    log.info("new user added successfully");
     return "adduser";
   }
   
@@ -53,6 +59,7 @@ public class MainController {
     Iterable<User> user = userRepository.findAll();
     List<User> userlist =  Lists.newArrayList(user);
     model.put("liste", userlist);
+    log.info("all users list");
     return "listofuser";
   }
 

@@ -23,11 +23,19 @@ repositories {
 
 
 dependencies {
-	//for logging
-	compile ('org.springframework.boot:spring-boot-starter-web')
+	//java persistance framework with hibernate
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
+	//thymeleaf to render in frontend
 	compile('org.springframework.boot:spring-boot-starter-thymeleaf')
-	//compile("com.h2database:h2")
-	compile group: 'mysql', name: 'mysql-connector-java'
+	//inmemory database to test programm quick with database no need to install a database
+	//it is temporary and data will be deleted adter the program is stopped
+	compile("com.h2database:h2")
+	//compile group: 'mysql', name: 'mysql-connector-java'
+	//bootstrap webjar 
+	compile group: 'org.webjars', name: 'bootstrap', version: '3.2.0'
+	compile group: 'org.webjars', name: 'jquery', version: '2.1.4'
+	
+	compile group: 'org.webjars', name: 'webjars-locator', version: '0.14'
+	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
