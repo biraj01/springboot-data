@@ -51,7 +51,7 @@ public class MainController {
   public String saveNewUser (@ModelAttribute User user) {
     userRepository.save(user);  
     log.info("new user added successfully");
-    return "adduser";
+    return "redirect:/demo/all";
   }
   
   @GetMapping(path="/all")
