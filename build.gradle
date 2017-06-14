@@ -36,6 +36,7 @@ dependencies {
 	compile group: 'org.webjars', name: 'jquery', version: '2.1.4'
 	
 	compile group: 'org.webjars', name: 'webjars-locator', version: '0.14'
+	compile("org.springframework.boot:spring-boot-starter-amqp")
 	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
