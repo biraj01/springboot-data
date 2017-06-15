@@ -15,8 +15,28 @@ public class User {
   private String name;
 
   private String email;
+  
+  private String password;
+  
+  private String passwordConform;
 
-  public Integer getId() {
+  public String getPassword() {
+	return password;
+}
+
+public void setPassword(String password) {
+	this.password = password;
+}
+
+public String getPasswordConform() {
+	return passwordConform;
+}
+
+public void setPasswordConform(String passwordConform) {
+	this.passwordConform = passwordConform;
+}
+
+public Integer getId() {
     return id;
   }
 
@@ -38,6 +58,11 @@ public class User {
 
   public void setEmail(String email) {
     this.email = email;
+  }
+  
+  public String toString(){
+	  return "User: " + name + " Email: " + email +  " Password: " + password + " Confom Password " + passwordConform;
+	  
   }
 
 }
