@@ -7,6 +7,10 @@ import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,11 +18,14 @@ import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.client.RestTemplate;
+
+import security.GithubAuthentication;
 
 @Controller
-@RequestMapping(path="/demo")
 public class MainController {
   
   private static final Logger log = LoggerFactory.getLogger(MainController.class);
@@ -54,7 +61,7 @@ public class MainController {
   public String saveNewUser (@ModelAttribute User user) {
     userRepository.save(user);  
     log.info("new user added successfully");
-    return "redirect:/demo/all";
+    return "redirect:/all";
   }
   
   @GetMapping(path="/all")
@@ -80,8 +87,43 @@ public class MainController {
 
  @RequestMapping(path="/logout")
  public String logout(){
-   return "redirect:/demo/login?logout";
+   return "redirect:/login?logout";
  }
+ 
+ @Value("${client_id}")
+ private String clientId;
+ 
+ @Value("${github.authorize.url}")
+ private String githubAuthorizeUrl;
+ 
+ @Value("${github.token.url}")
+ private String githubTokenUrl;
+
+ @RequestMapping(value = "/github/authorize", method = RequestMethod.GET)
+ public String redirectGithubLogin() {
+   log.info(githubAuthorizeUrl);
+   return "redirect:" + githubAuthorizeUrl;
+ }
+ 
+ @RequestMapping(value = "/github/token", method = RequestMethod.GET)
+ public String loginWithToken(String code) {
+   log.info("in token");
+
+   if (code == null){
+     return "redirect:/login";
+   }
+   RestTemplate restTemplate = new RestTemplate();
+   String url = githubTokenUrl + "&code="+code;
+   ResponseEntity<String> postForEntity = restTemplate.postForEntity(url, null, String.class);
+   String responseText = postForEntity.getBody();
+   
+   if (responseText.matches("access_token=.+")){
+     SecurityContextHolder.getContext().setAuthentication(new GithubAuthentication());
+   }
+   
+   return "redirect:/all";
+ }
+ 
   
   
   
