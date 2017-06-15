@@ -38,5 +38,8 @@ dependencies {
 	compile group: 'org.webjars', name: 'webjars-locator', version: '0.14'
 	compile("org.springframework.boot:spring-boot-starter-amqp")
 	
+	compile("org.springframework.boot:spring-boot-starter-security")
+	
+	
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -64,6 +65,26 @@ public class MainController {
     log.info("all users list");
     return "listofuser";
   }
+  
+  
+  @GetMapping(path="/login")
+  public String login(){ 
+   return "login"; 
+  }
+  
+  @PostMapping(path="/all")
+  public String loginredirect(){ 
+   return "listofuser"; 
+  }
+  
+
+ @RequestMapping(path="/logout")
+ public String logout(){
+   return "redirect:/demo/login?logout";
+ }
+  
+  
+  
 
   
 }
