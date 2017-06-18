@@ -3,7 +3,6 @@ package com.biraj.springmysql;
 import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,8 +66,8 @@ public class MainController {
   @GetMapping(path="/all")
   public  String getAllUsers(Map<String, Object> model) {
     Iterable<User> user = userRepository.findAll();
-    List<User> userlist =  Lists.newArrayList(user);
-    model.put("liste", userlist);
+   // List<User> userlist =  new ArrayList(user);
+    //model.put("liste", userlist);
     log.info("all users list");
     return "listofuser";
   }
