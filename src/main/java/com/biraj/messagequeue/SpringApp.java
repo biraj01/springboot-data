@@ -11,7 +11,6 @@ package com.biraj.messagequeue;
   import org.springframework.boot.autoconfigure.SpringBootApplication;
   import org.springframework.context.annotation.Bean;
  
-@SpringBootApplication
 public class SpringApp {
   
   final static String queueName = "spring-boot";
@@ -46,9 +45,9 @@ public class SpringApp {
       return new MessageListenerAdapter(receiver, "receiveMessage");
   }
 
-  public static void main(String[] args) throws InterruptedException {
-      SpringApplication.run(SpringApp.class, args);
-  }
+ /* public static void main(String[] args) throws InterruptedException {
+      //SpringApplication.run(SpringApp.class, args);
+  }*/
 
 
 }
