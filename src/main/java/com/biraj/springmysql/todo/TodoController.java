@@ -1,9 +1,7 @@
 package com.biraj.springmysql.todo;
 
-import java.util.List;
 import java.util.Map;
 
-import org.assertj.core.util.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,13 +31,13 @@ public class TodoController {
     return "addnew";
   }
   
-  @GetMapping(path="all")
+ /* @GetMapping(path="all")
   public String getAllTodo(Map<String , Object>  map){
     Iterable<Todo> it = repository.findAll();
-    List<Todo> todolist = Lists.newArrayList(it);
+    List<Todo> todolist = new ArrayList(it);
     map.put("todos", todolist);
     return "alltodos";
-  }
+  }*/
   
 
 }
