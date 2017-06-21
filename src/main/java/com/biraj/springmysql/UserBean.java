@@ -1,18 +1,7 @@
 package com.biraj.springmysql;
 
-import java.sql.Blob;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-
-@Entity
-public class User {
-
-  @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+public class UserBean {
+  
   private Integer id;
 
   private String name;
@@ -24,30 +13,30 @@ public class User {
   private String passwordConform;
   
   
-  private String imageLink;
+  private byte [] image;
 
-  public String getImage() {
-    return imageLink;
+  public  byte [] getImage() {
+    return image;
   }
 
-  public void setImage(String image) {
-    this.imageLink = image;
+  public void setImage( byte [] image) {
+    this.image = image;
   }
 
   public String getPassword() {
-	return password;
+  return password;
 }
 
 public void setPassword(String password) {
-	this.password = password;
+  this.password = password;
 }
 
 public String getPasswordConform() {
-	return passwordConform;
+  return passwordConform;
 }
 
 public void setPasswordConform(String passwordConform) {
-	this.passwordConform = passwordConform;
+  this.passwordConform = passwordConform;
 }
 
 public Integer getId() {
@@ -75,8 +64,8 @@ public Integer getId() {
   }
   
   public String toString(){
-	  return "User: " + name + " Email: " + email +  " Password: " + password + " Confom Password " + passwordConform + "filesize" ;
-	  
+    return "User: " + name + " Email: " + email +  " Password: " + password + " Confom Password " + passwordConform + "filesize" ;
+    
   }
 
 }

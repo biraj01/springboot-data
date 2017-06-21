@@ -14,6 +14,7 @@ public class Todo {
   @GeneratedValue(strategy=GenerationType.AUTO)
   private long Id;
   private Date date;
+  private String text;
   private String title;
   private String details;
   
@@ -22,11 +23,14 @@ public class Todo {
    
   }
   
-  public Todo(Date date, String title, String details) {
-    super();
-    this.date = date;
-    this.title = title;
-    this.details = details;
+ 
+
+  public String getText() {
+    return text;
+  }
+
+  public void setText(String text) {
+    this.text = text;
   }
   
   

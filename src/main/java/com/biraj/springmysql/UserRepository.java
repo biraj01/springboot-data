@@ -7,6 +7,10 @@ public interface UserRepository extends CrudRepository<User, Long> {
 	public default boolean findbyusernameandpassword(User user){
 		
 		return false;
+		
 	}
+	
+  public  User findOneByName(String name);
+
 
 }

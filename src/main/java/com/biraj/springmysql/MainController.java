@@ -1,6 +1,11 @@
 package com.biraj.springmysql;
 
-import java.util.List;
+
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -12,16 +17,17 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.biraj.springmysql.todo.Todo;
+import com.biraj.springmysql.todo.TodoRepository;
 
 
 @Controller
@@ -31,6 +37,10 @@ public class MainController {
 
   @Autowired
   private UserRepository userRepository;
+  
+  @Autowired
+  private TodoRepository todorepository;
+
 
 //  @GetMapping(path="/add") // Map ONLY GET Requests
 //  public @ResponseBody String addNewUser (@RequestParam String name
@@ -45,6 +55,20 @@ public class MainController {
 //    return "Saved";
 //  }
   
+  @GetMapping(path="/todos")
+  public String listTodos(Model model){
+    model.addAttribute("todo", new Todo());
+    return "test";
+  }
+  
+  
+  @PostMapping(path="/todos")
+  public String saveTodos(@ModelAttribute Todo todo){
+    todorepository.save(todo);
+    //Iterable<Todo> todos = todorepository.findAll();
+    return "test";
+  }
+ 
   @GetMapping(path="/adduser") // Map ONLY GET Requests
   public String addNewUser (Model model) {
     // @ResponseBody means the returned String is the response, not a view name
@@ -54,6 +78,7 @@ public class MainController {
     return "adduser";
   }
   
+ 
  
   
   @PostMapping(path="/adduser") // Map ONLY Post Requests
@@ -102,13 +127,30 @@ public class MainController {
   }
   
   @PostMapping(path="register")
-  public @ResponseBody String saveuserdata(@ModelAttribute User user){
+  public String saveuserdata(@ModelAttribute User user ,  @RequestParam("file") MultipartFile file){
 	  
 	  //validate user data, send error if data is not correct then to register success page
 	  log.info(user.toString());
+	  log.info(file.getOriginalFilename());
+	  try {
+      file.transferTo(new File("C:\\Users\\bdhungel\\eclipseinstallation-Master2\\ws\\spring-mysql\\src\\main\\resources\\static\\images\\bewertung.png"));
+    } catch (IllegalStateException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    } catch (IOException e) {
+      // TODO Auto-generated catch block
+      e.printStackTrace();
+    }
 	  userRepository.save(user);
-	  return "succcessfully saved new user";
+	  //User userfromRepo = userRepository.findOneByName(user.getName());
+	  return "redirect:/welcome";
 	  
+  }
+  
+  @GetMapping(path="/welcome")
+  public String welcome(Model model){ 
+    model.addAttribute("user", userRepository.findOneByName("biraj"));
+    return "welcome";
   }
   
 
